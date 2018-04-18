@@ -1,0 +1,31 @@
+{
+  "name": "stacker",
+  "version": "1.0.0",
+  "description": "A Telegram bot for ranking stickers",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src",
+    "dev": "dotenv npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huijari/stacker.git"
+  },
+  "keywords": [
+    "telegram",
+    "ranking",
+    "stickers"
+  ],
+  "author": "Alexandre Cesar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huijari/stacker/issues"
+  },
+  "homepage": "https://github.com/huijari/stacker#readme",
+  "dependencies": {
+    "mongodb": "^3.0.7"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^1.4.0"
+  }
+}
