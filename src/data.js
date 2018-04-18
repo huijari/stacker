@@ -23,4 +23,18 @@ async function getConnection() {
   return { client, db }
 }
 
+async function getPackname() {
+  const { client, db } = await getConnection()
+  const document = await db.collection('meta').findOne({
+    packname: { $exists: true }
+  })
+	client.close()
+  return document.packname
+}
+async function createPackname(packname) {
+	const { client, db } = await getConnection()
+	await db.collection('meta').insertOne({ packname })
+	client.close()
+}
+
 module.exports = {}
