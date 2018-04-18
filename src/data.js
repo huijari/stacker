@@ -54,4 +54,13 @@ async function incrementCounter(file, user) {
   client.close()
 }
 
+async function getOriginal(file) {
+  const { client, db } = await getConnection()
+  const document = await db.collection('sticker').findOne({ file })
+  db.close()
+  if (document.original)
+    return document.original
+  return file
+}
+
 module.exports = {}
