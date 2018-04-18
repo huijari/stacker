@@ -58,9 +58,19 @@ async function getOriginal(file) {
   const { client, db } = await getConnection()
   const document = await db.collection('sticker').findOne({ file })
   db.close()
-  if (document.original)
-    return document.original
+  if (document.original) return document.original
   return file
+}
+
+async function getTop() {
+  const amount = 15
+  const { client, db } = await getConnection()
+  const documents = await db
+    .collection('sticker')
+    .aggregate([{ $sort: { counter: -1 } }, { $limit: amount }])
+    .toArray()
+  client.close()
+  return documents
 }
 
 module.exports = {}
