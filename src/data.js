@@ -43,11 +43,10 @@ async function getLastVote(file, user) {
 }
 async function incrementCounter(file, user) {
   const { client, db } = await getConnection()
-  const now = new Date().toISOString()
   await db.collection('sticker').updateOne(
     { file },
     {
-      $set: { lastVote: { [user]: now } },
+      $set: { lastVote: { [user]: new Date() } },
       $inc: { counter: 1 }
     },
     { upsert: true }
