@@ -1,1 +1,2 @@
-console.error('method not implemented')
+const start = require('./bot')
+start()
