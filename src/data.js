@@ -21,17 +21,17 @@ async function getConnection() {
   return { client, db }
 }
 
-async function getPackname() {
+async function getMeta() {
   const { client, db } = await getConnection()
   const meta = await db.collection('meta').findOne({
     packname: { $exists: true }
   })
   client.close()
-  return meta.packname
+  return meta
 }
-async function createPackname(packname) {
+async function createMeta(chatid, packname) {
   const { client, db } = await getConnection()
-  await db.collection('meta').insertOne({ packname })
+  await db.collection('meta').insertOne({ packname, chatid })
   client.close()
 }
 
@@ -74,8 +74,8 @@ async function getTop() {
 }
 
 module.exports = {
-  getPackname,
-  createPackname,
+  getMeta,
+  createMeta,
   getLastVote,
   incrementCounter,
   getOriginal,
