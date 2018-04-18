@@ -49,8 +49,8 @@ async function incrementCounter(file, user) {
     {
       $set: { lastVote: { [user]: now } },
       $inc: { counter: 1 }
-		},
-		{ upsert: true }
+    },
+    { upsert: true }
   )
   client.close()
 }
