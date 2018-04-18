@@ -23,11 +23,11 @@ async function getConnection() {
 
 async function getPackname() {
   const { client, db } = await getConnection()
-  const document = await db.collection('meta').findOne({
+  const meta = await db.collection('meta').findOne({
     packname: { $exists: true }
   })
   client.close()
-  return document.packname
+  return meta.packname
 }
 async function createPackname(packname) {
   const { client, db } = await getConnection()
@@ -37,9 +37,9 @@ async function createPackname(packname) {
 
 async function getLastVote(file, user) {
   const { client, db } = await getConnection()
-  const document = await db.collection('sticker').findOne({ file })
+  const sticker = await db.collection('sticker').findOne({ file })
   client.close()
-  return document && document.lastVote[user]
+  return sticker && sticker.lastVote[user]
 }
 async function incrementCounter(file, user) {
   const { client, db } = await getConnection()
@@ -56,21 +56,28 @@ async function incrementCounter(file, user) {
 
 async function getOriginal(file) {
   const { client, db } = await getConnection()
-  const document = await db.collection('sticker').findOne({ file })
+  const sticker = await db.collection('sticker').findOne({ file })
   db.close()
-  if (document.original) return document.original
+  if (sticker.original) return sticker.original
   return file
 }
 
 async function getTop() {
   const amount = 15
   const { client, db } = await getConnection()
-  const documents = await db
+  const stickers = await db
     .collection('sticker')
     .aggregate([{ $sort: { counter: -1 } }, { $limit: amount }])
     .toArray()
   client.close()
-  return documents
+  return stickers
 }
 
-module.exports = {}
+module.exports = {
+  getPackname,
+  createPackname,
+  getLastVote,
+  incrementCounter,
+  getOriginal,
+  getTop
+}
