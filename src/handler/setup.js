@@ -1,6 +1,6 @@
 const { v4 } = require('uuid')
 
-const { createMeta } = require('./data')
+const { createMeta } = require('../data')
 
 const setup = async ({ message, from, reply, telegram }) => {
   if (!message.reply_to_message || !message.reply_to_message.sticker)
@@ -13,7 +13,7 @@ const setup = async ({ message, from, reply, telegram }) => {
 
   const result = await telegram.createNewStickerSet(from.id, name, title, {
     png_sticker: message.reply_to_message.sticker.file_id,
-    emojis: message.reply_to_message.sticker.emoji,
+    emojis: message.reply_to_message.sticker.emoji
   })
 
   if (result) {
@@ -22,6 +22,4 @@ const setup = async ({ message, from, reply, telegram }) => {
   }
 }
 
-module.exports = {
-  setup
-}
+module.exports = setup
