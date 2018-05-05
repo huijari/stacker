@@ -3,8 +3,8 @@ const getConnection = require('./connection')
 async function getOriginal(file) {
   const { client, db } = await getConnection()
   const sticker = await db.collection('sticker').findOne({ file })
-  db.close()
-  if (sticker.original) return sticker.original
+  client.close()
+  if (sticker && sticker.original) return sticker.original
   return file
 }
 async function getTop() {
